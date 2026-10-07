@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 92" role="img" aria-label="Techvya">
+  <!-- Recreation of the official Techvya wordmark (navy + azure triangle accent). If you have the official file, save it as public/logo.png and point the header/footer img to it. Do not stretch; keep aspect. -->
+  <text x="6" y="66" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800" fill="#0A1F3D" textLength="306" lengthAdjust="spacingAndGlyphs">TECHVYA</text>
+  <polygon points="286.5,38 274,60 299,60" fill="#1B87F0"/>
+</svg>

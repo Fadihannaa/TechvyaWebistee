@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+html { scroll-behavior: smooth; }
+body { @apply bg-white text-slate-800 antialiased; font-family: Inter, system-ui, sans-serif; }
+h1,h2,h3,.font-display { font-family: Sora, Inter, sans-serif; }
+
+::selection { background: #0E63C6; color: white; }
+
+:focus-visible { outline: 3px solid #0E63C6; outline-offset: 2px; border-radius: 4px; }
+
+.container-x { @apply mx-auto w-full max-w-7xl px-5 sm:px-8; }
+
+.btn-primary { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 text-sm font-semibold text-white shadow-card transition hover:bg-brand-700 hover:shadow-pop hover:-translate-y-0.5 active:translate-y-0; }
+.btn-secondary { @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-navy-900 transition hover:border-navy-900 hover:-translate-y-0.5; }
+.btn-light { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-navy-900 transition hover:-translate-y-0.5 hover:shadow-pop; }
+.btn-ghost-dark { @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10; }
+
+.card { @apply rounded-2xl border border-slate-200/80 bg-white p-6 shadow-card; }
+.eyebrow { @apply text-xs font-bold uppercase tracking-[0.18em] text-brand-600; }
+.h2 { @apply font-display text-3xl font-bold leading-tight text-navy-900 sm:text-4xl; }
+.lead { @apply mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Premium motion: tech marquee, scroll cue, cursor spotlight */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.animate-marquee { animation: marquee 32s linear infinite; }
+.marquee-paused:hover .animate-marquee { animation-play-state: paused; }
+
+@keyframes cue-drop { 0%, 100% { transform: translateY(0); opacity: 0.9; } 50% { transform: translateY(10px); opacity: 0.35; } }
+.animate-cue { animation: cue-drop 1.8s ease-in-out infinite; }
+
+.spot { position: relative; }
+.spot::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  opacity: 0; transition: opacity 0.35s ease; pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(27, 135, 240, 0.14), transparent 65%);
+}
+.spot:hover::before { opacity: 1; }
