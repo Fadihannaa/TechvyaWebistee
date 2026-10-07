@@ -31,7 +31,7 @@ function Logo() {
   return (
     <Link to="/" className="flex items-center gap-2.5" aria-label="Techvya home">
       {/* Replace /public/logo.svg with official Techvya logo file (same filename). Colors below match brand. */}
-      <img src="/logo.svg" alt="Techvya logo" className="h-9 w-auto" loading="eager" />
+      <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="Techvya logo" className="h-9 w-auto" loading="eager" />
     </Link>
   )
 }
@@ -92,7 +92,7 @@ function Footer() {
     <footer className="bg-navy-950 text-slate-300">
       <div className="container-x grid gap-10 py-14 md:grid-cols-4">
         <div>
-          <img src="/logo.svg" alt="Techvya logo" className="h-9 w-auto brightness-0 invert" loading="lazy" />
+          <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="Techvya logo" className="h-9 w-auto brightness-0 invert" loading="lazy" />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-slate-400">
             IT services and consulting. Microsoft Dynamics 365 F&O support and professional websites & web applications.
           </p>
