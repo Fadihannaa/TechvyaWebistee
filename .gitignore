@@ -23,3 +23,6 @@ Thumbs.db
 # TypeScript
 tsconfig.tsbuildinfo
 *.tsbuildinfo
+
+# Unrelated nested project, do not track
+TechvyaErp/
