@@ -5,6 +5,7 @@ import { ArrowRight, ArrowLeft, CheckCircle2, AlertTriangle, Mail, MessageCircle
 import { Seo } from '../components/Layout'
 import { Reveal } from '../components/ui'
 import { site, serviceOptions } from '../site'
+import { getSupabase, isSupabaseConfigured, type RequirementRow } from '../lib/supabase'
 
 type Form = {
   service: string
@@ -68,9 +69,33 @@ export default function Contact() {
   async function submit(ev: React.FormEvent) {
     ev.preventDefault()
     if (!validate(3)) return
-    if (!endpoint) { setStatus('error'); setServerMsg('Form endpoint is not configured yet. Your message was NOT sent. Please email us directly or configure VITE_FORM_ENDPOINT (see README).'); return }
     setStatus('sending'); setServerMsg('')
     try {
+      const supa = getSupabase()
+      if (supa) {
+        const row: RequirementRow = {
+          service: form.service,
+          full_name: form.name.trim(),
+          company: form.company.trim() || null,
+          email: form.email.trim(),
+          phone: form.phone.trim() || null,
+          country: form.country.trim(),
+          contact_method: form.contactMethod,
+          title: form.title.trim(),
+          description: form.description.trim(),
+          current_system: form.currentSystem.trim() || null,
+          business_impact: form.impact.trim() || null,
+          timeline: form.timeline,
+          budget: form.budget || null,
+          consent: form.consent,
+          source_url: window.location.href,
+        }
+        const { error } = await supa.from('requirements').insert(row)
+        if (error) throw new Error(error.message)
+        setStatus('success')
+        return
+      }
+      if (!endpoint) { setStatus('error'); setServerMsg('No submission destination is configured yet (Supabase and VITE_FORM_ENDPOINT are both empty). Your message was NOT sent. See README “Configuring forms”, or reach us directly by email/WhatsApp.'); return }
       const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...form, source: window.location.href, sentAt: new Date().toISOString() }) })
       if (!res.ok) throw new Error(`Server responded ${res.status}`)
       setStatus('success')
@@ -173,10 +198,10 @@ export default function Contact() {
                         ))}
                         <div className="grid grid-cols-[110px_1fr] gap-2"><dt className="font-semibold text-navy-900">Details</dt><dd className="whitespace-pre-wrap text-slate-700">{form.description}</dd></div>
                       </dl>
-                      {!endpoint && (
+                      {!isSupabaseConfigured && !endpoint && (
                         <p className="mt-4 flex gap-2 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-slate-700" role="note">
                           <AlertTriangle size={18} className="mt-0.5 shrink-0 text-amber-600" />
-                          Form endpoint not configured (VITE_FORM_ENDPOINT is empty). Submissions cannot be sent yet. See README “Configuring forms”. You can still reach us by email/WhatsApp.
+                          No submission destination is configured yet (Supabase and form endpoint are both empty). Submissions cannot be sent yet. See README “Configuring forms”. You can still reach us by email/WhatsApp.
                         </p>
                       )}
                       <div className="mt-4 flex items-start gap-2.5">

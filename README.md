@@ -22,11 +22,16 @@ Requirements: Node 18+.
 
 ## 3. Configuring forms
 
-The contact form POSTs JSON to `VITE_FORM_ENDPOINT` (see `.env.example`) falling back to `site.formEndpoint`.
+**Option A — Supabase (recommended, stores submissions in your database):**
 
-- If empty: the form shows an amber "endpoint not configured" notice on the Review step and refuses to fake success.
-- To connect: set `VITE_FORM_ENDPOINT` in Cloudflare Pages env vars + local `.env`, endpoint must accept `POST application/json` and return 2xx. Options: small Worker/API, Formspree, Basin, Getform.
-- Payload: `{ service, name, company, email, phone, country, contactMethod, title, description, currentSystem, impact, timeline, budget, consent, source, sentAt }`.
+1. In Supabase dashboard → **SQL Editor** → New query → paste the contents of `supabase-requirements.sql` → **Run**. This creates the `requirements` table with an insert-only policy (visitors can submit, but cannot read or change anything).
+2. Get your keys: Supabase dashboard → **Project Settings** (gear) → **API** → copy **Project URL** and **anon public** key. Never use the `service_role` key in the website.
+3. Local testing: copy `.env.example` to `.env` and fill `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY`, then `npm run dev`.
+4. Production: Cloudflare Pages project → **Settings → Environment variables** → add both variables (Production) → **Retry deployment**.
+
+**Option B — generic API endpoint:**
+
+The contact form POSTs JSON to `VITE_FORM_ENDPOINT` (see `.env.example`) only when Supabase is not configured. The endpoint must accept `POST application/json` and return 2xx. Options: small Worker/API, Formspree, Basin, Getform.
 
 ## 4. Deploying to Cloudflare Pages
 
