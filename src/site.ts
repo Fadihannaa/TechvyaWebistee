@@ -3,7 +3,7 @@
 export const site = {
   name: 'Techvya',
   tagline: 'ERP Expertise. Digital Solutions.',
-  domain: 'https://www.PLACEHOLDER-techvya.com', // TODO: set production domain
+  domain: 'https://techvyasolutions.com',
   locationShort: 'Lebanon · Working remotely worldwide',
   locationLong: 'Based in Lebanon, serving local and international clients remotely.', // TODO: add city if desired. Do not invent street address.
   email: 'info@PLACEHOLDER-techvya.com', // TODO: set real inbox, e.g. info@techvya.com
