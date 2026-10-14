@@ -1,7 +1,9 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 
-const url = (import.meta.env.VITE_SUPABASE_URL as string | undefined)?.trim()
-const anonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)?.trim()
+// The publishable key is safe to include in a browser bundle. Never use the
+// Supabase secret/service-role key here; database security is enforced by RLS.
+const url = ((import.meta.env.VITE_SUPABASE_URL as string | undefined)?.trim() || 'https://aqbfawjpqdlqqzictccr.supabase.co')
+const anonKey = ((import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)?.trim() || 'sb_publishable_PD1VlEHE-XjDqYYM3ZewUA_77gWmEUe')
 
 export const isSupabaseConfigured = Boolean(url && anonKey)
 
